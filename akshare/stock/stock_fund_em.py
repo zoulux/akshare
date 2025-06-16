@@ -9,6 +9,7 @@ https://data.eastmoney.com/zjlx/detail.html
 import math
 import time
 from functools import lru_cache
+import random
 
 import pandas as pd
 import requests
@@ -174,6 +175,8 @@ def stock_individual_fund_flow_rank(indicator: str = "5日") -> pd.DataFrame:
         data_json = r.json()
         inner_temp_df = pd.DataFrame(data_json["data"]["diff"])
         temp_list.append(inner_temp_df)
+        time.sleep(random.uniform(1, 2))
+
     temp_df = pd.concat(temp_list, ignore_index=True)
     temp_df.reset_index(inplace=True)
     temp_df["index"] = range(1, len(temp_df) + 1)
